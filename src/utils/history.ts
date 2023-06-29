@@ -31,6 +31,7 @@ export const undoAtom = atom(
     const history = get(historyAtom);
     if (history.length > 0) {
       const [shapes, ...rest] = history;
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       set(internalShapeAtomsAtom, (prev) =>
         shapes?.map((shape, index) =>

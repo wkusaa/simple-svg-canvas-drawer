@@ -19,7 +19,7 @@ export const SvgDots = () => {
   return (
     <g>
       {dots.map(([x, y]) => (
-        <circle cx={x} cy={y} r="2" fill="#aaa" />
+        <circle key={`${x} ${y}`} cx={x} cy={y} r="2" fill="#aaa" />
       ))}
     </g>
   );

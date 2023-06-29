@@ -1,6 +1,6 @@
 import { atom, useAtom } from "jotai";
 
-import { addShapeAtom } from "./SvgShape";
+import { addShapeAtom } from "./SvgShapes";
 import { type Point } from "~/types/svg";
 
 const dotsAtom = atom<readonly Point[]>([]);
@@ -19,7 +19,7 @@ export const SvgDots = () => {
   return (
     <g>
       {dots.map(([x, y]) => (
-        <circle key={`${x}${y}`} cx={x} cy={y} r="2" fill="#aaa" />
+        <circle cx={x} cy={y} r="2" fill="#aaa" />
       ))}
     </g>
   );

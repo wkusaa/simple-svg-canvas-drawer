@@ -1,6 +1,7 @@
 import { atom, useAtom } from "jotai";
-
-import { type Point } from "~/types/svg";
+import { type Point, type ShapeAtom } from "~/types/svg";
+import { selectAtom, selectedAtomCreator } from "~/utils/selection";
+import { useMemo } from "react";
 
 const pointsToPath = (points: readonly Point[]) => {
   let d = "";
@@ -14,20 +15,30 @@ const pointsToPath = (points: readonly Point[]) => {
   return d;
 };
 
-const shapeAtom = atom({ path: "" });
+export const createShapeAtom = (points: readonly Point[]) =>
+  atom({ path: pointsToPath(points) });
 
-export const addShapeAtom = atom(
-  null,
-  (_get, set, update: readonly Point[]) => {
-    set(shapeAtom, { path: pointsToPath(update) });
-  }
-);
-
-export const SvgShape = () => {
+export const SvgShape = ({ shapeAtom }: { shapeAtom: ShapeAtom }) => {
   const [shape] = useAtom(shapeAtom);
+  const [, select] = useAtom(selectAtom);
+  const [selected] = useAtom(
+    useMemo(() => selectedAtomCreator(shapeAtom), [shapeAtom])
+  );
   return (
-    <g>
-      <path d={shape.path} fill="none" stroke="black" strokeWidth="3" />
+    <g onClick={() => select(shapeAtom)}>
+      <path
+        d={shape.path}
+        fill="none"
+        opacity={selected ? "0.3" : "0"}
+        stroke="red"
+        strokeWidth="12"
+      />
+      <path
+        d={shape.path}
+        fill="none"
+        stroke={shape.color || "black"}
+        strokeWidth="3"
+      />
     </g>
   );
 };

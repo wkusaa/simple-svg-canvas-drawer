@@ -1,8 +1,8 @@
 import { atom, useAtom } from "jotai";
-import { type Point } from "~/types/svg";
 
-import { SvgShape } from "./SvgShape";
+import { SvgShapes } from "./SvgShapes";
 import { addDotAtom, commitDotsAtom, SvgDots } from "./SvgDots";
+import { type Point } from "~/types/svg";
 
 const drawingAtom = atom(false);
 
@@ -27,17 +27,18 @@ export const SvgRoot = () => {
   const [, handleMouseMove] = useAtom(handleMouseMoveAtom);
   return (
     <svg
-      width="200"
+      width="400"
       height="200"
-      viewBox="0 0 200 200"
+      viewBox="0 0 400 200"
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
       onMouseMove={(e) => {
-        handleMouseMove([e.clientX, e.clientY]);
+        const { x, y } = e.currentTarget.getBoundingClientRect();
+        handleMouseMove([e.clientX - x, e.clientY - y]);
       }}
     >
-      <rect width="200" height="200" fill="#eee" />
-      <SvgShape />
+      <rect width="400" height="400" fill="#eee" />
+      <SvgShapes />
       <SvgDots />
     </svg>
   );

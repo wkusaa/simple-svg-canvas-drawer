@@ -1,8 +1,15 @@
 import Head from "next/head";
 import Link from "next/link";
 import { api } from "~/utils/api";
+import { atom, useAtom } from "jotai";
+
+const atomCount = atom(0);
+const atomCount2 = atom(0);
 
 export default function Home() {
+  const [count, setCount] = useAtom(atomCount);
+  const [count2, setCount2] = useAtom(atomCount2);
+
   const hello = api.example.hello.useQuery({ text: "from tRPC" });
 
   return (
@@ -44,6 +51,26 @@ export default function Home() {
           <p className="text-2xl text-white">
             {hello.data ? hello.data.greeting : "Loading tRPC query..."}
           </p>
+          <div className="col-span-12 grid grid-flow-col gap-4">
+            <div className="col-span-6">
+              <button
+                onClick={() => setCount(count + 1)}
+                className="rounded-lg bg-blue-700 p-4 text-white hover:bg-blue-900"
+              >
+                Button 1
+              </button>
+              <div className="text-center text-2xl text-white">{count}</div>
+            </div>
+            <div className="col-span-6">
+              <button
+                onClick={() => setCount2(count2 + 1)}
+                className="rounded-lg bg-blue-700 p-4 text-white hover:bg-blue-900"
+              >
+                Button 2
+              </button>
+              <div className="text-center text-2xl text-white">{count2}</div>
+            </div>
+          </div>
         </div>
       </main>
     </>

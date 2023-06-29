@@ -1,7 +1,7 @@
 import { atom, useAtom } from "jotai";
 
 import { createShapeAtom, SvgShape } from "./SvgShape";
-import { type ShapeAtom, type Point } from "~/types/svg";
+import { type Point } from "~/types/svg";
 import { selectAtom, selectedAtom, unselectAtom } from "~/utils/selection";
 import { shapeAtomsAtom } from "~/utils/history";
 
@@ -34,6 +34,7 @@ export const SvgShapes = () => {
   return (
     <g>
       {shapeAtoms.map((shapeAtom) => (
+        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
         <SvgShape key={`${shapeAtom}`} shapeAtom={shapeAtom} />
       ))}
     </g>
